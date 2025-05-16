@@ -21,8 +21,17 @@ public class TestNGTodo2 {
 
     @BeforeMethod
     public void setup(Method m, ITestContext ctx) throws MalformedURLException {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments(
+            "--headless",              // Runs Chrome in headless mode
+            "--no-sandbox",           // Bypass OS security model (required on Linux)
+            "--disable-dev-shm-usage", // Overcome limited resource problems
+            "--disable-gpu",          // GPU acceleration isn't useful headless
+            "--window-size=1920,1080"  // Set window size for consistent rendering
+        );
+        
         System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
-        driver = new ChromeDriver();
+        driver = new ChromeDriver(options);
     }
 
     @Test
